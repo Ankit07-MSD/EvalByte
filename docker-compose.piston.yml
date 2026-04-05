@@ -1,0 +1,20 @@
+# Official-style Piston setup (see https://github.com/engineer-man/piston/blob/master/docker-compose.yaml)
+# Do NOT use ghcr.io/engineer-man/piston/api alone — it crashes without /piston packages volume.
+#
+# From Evalbyte folder:
+#   docker compose -f docker-compose.piston.yml up -d
+#
+# First start downloads packages into ./data/piston/packages (can take several minutes).
+
+services:
+  piston:
+    image: ghcr.io/engineer-man/piston:latest
+    container_name: evalbyte-piston
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "2000:2000"
+    volumes:
+      - ./data/piston/packages:/piston/packages
+    tmpfs:
+      - /tmp:exec
