@@ -29,6 +29,10 @@ async function main() {
       console.log('OK', data);
     } catch (e) {
       const msg = e.response?.data?.message || e.message;
+      if (String(msg).includes('Already installed')) {
+        console.log('OK (already installed)');
+        continue;
+      }
       console.log('FAILED', msg);
       if (e.code === 'ECONNREFUSED') {
         console.error('\nStart Piston first: cd .. && docker compose -f docker-compose.piston.yml up -d');
