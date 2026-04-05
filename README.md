@@ -176,6 +176,33 @@ Send JWT as: `Authorization: Bearer <token>`
 - **Judge0**: Paid or rate-limited tiers on RapidAPI; optional if you use `CODE_RUNNER=judge0`.
 - **Java**: Use `public class Main` to match both Piston and Judge0 templates.
 
+## GitHub Pages (sirf frontend UI)
+
+GitHub Pages **README** dikhaata hai jab root par koi **`index.html`** nahi hota. Is repo mein React app `frontend/` ke andar hai — pehle **build** chahiye.
+
+### Automatic deploy (recommended)
+
+1. Ye repo GitHub par push karo (`.github/workflows/deploy-pages.yml` included).
+2. GitHub repo → **Settings** → **Pages** → **Build and deployment** → **Source**: **GitHub Actions** (NOT “Deploy from a branch”).
+3. **Actions** tab kholo → **Deploy frontend to GitHub Pages** workflow green hone do.
+4. Site URL: `https://<username>.github.io/<repo-name>/`  
+   - `<repo-name>` aur workflow mein `VITE_BASE` wahi hona chahiye (usually lowercase, e.g. `evalbyte`).
+
+### Important
+
+- Pages par sirf **static React build** chalega. **Login / API / submit** tab kaam karenge jab tumhara **backend** kahin aur host ho (Render, Railway, etc.) aur GitHub repo **Secrets** mein `VITE_API_URL` set ho (poora API URL, jaise `https://api.tumhari-site.com`). Bina iske UI khulega par API calls fail ho sakti hain.
+- Pehle “branch se Pages” use kiya ho to hata do; warna galat folder serve ho sakta hai.
+
+### Manual build check (local)
+
+```bash
+cd Evalbyte/frontend
+set VITE_BASE=/your-repo-name/
+npm run build
+```
+
+Open `frontend/dist/index.html` logic via a static server (paths must match `VITE_BASE`).
+
 ## Production build (frontend)
 
 ```bash
